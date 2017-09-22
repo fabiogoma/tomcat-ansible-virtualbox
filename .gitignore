@@ -1,4 +1,4 @@
 .vagrant
 .git
 *.retry
-test
+*.gz
