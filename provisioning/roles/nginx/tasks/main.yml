@@ -1,0 +1,3 @@
+---
+- include: install-nginx.yml
+- include: create-configuration.yml

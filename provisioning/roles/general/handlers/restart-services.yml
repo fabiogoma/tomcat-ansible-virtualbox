@@ -1,0 +1,6 @@
+---
+- name: Restart mDNS service
+  service: name=avahi-daemon enabled=yes state=restarted
+
+- name: Restart sshd server
+  service: name=sshd enabled=yes state=restarted

@@ -1,0 +1,19 @@
+upstream backend {
+    {% for server in tomcat_server_list %}
+    server {{server}}.local:8080 max_fails=1 fail_timeout=1 weight=1;
+    {% endfor %}
+}
+
+server {
+    listen 80;
+    server_name  {{hostname}};
+
+    location / {
+        proxy_pass http://backend;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+      location = /50x.html {
+      root   /usr/share/nginx/html;
+    }
+}

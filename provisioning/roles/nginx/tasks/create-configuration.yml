@@ -1,0 +1,26 @@
+---
+- name: Generate NGINX configuration from template for ACC
+  template:
+    src: default.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+    owner: root
+    group: root
+    mode: 0644
+  vars:
+    tomcat_server_list: "{{ tomcat_acc_list }}"
+    hostname: "{{ inventory_hostname }}"
+  when: inventory_hostname | search("acc")
+  notify: Reload systemd configuration and restart NGINX service
+
+- name: Generate NGINX configuration from template for PRD
+  template:
+    src: default.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+    owner: root
+    group: root
+    mode: 0644
+  vars:
+    tomcat_server_list: "{{ tomcat_prd_list }}"
+    hostname: "{{ inventory_hostname }}"
+  when: inventory_hostname | search("prd")
+  notify: Reload systemd configuration and restart NGINX service

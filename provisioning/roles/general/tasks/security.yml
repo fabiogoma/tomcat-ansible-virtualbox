@@ -1,0 +1,16 @@
+---
+- name: Set SELinux to permissive
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Disable firewalld
+  service: name=firewalld enabled=no state=stopped
+
+- name: Enable authentication with password
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication no'
+    line: 'PasswordAuthentication yes'
+    backrefs: yes
+  notify: Restart sshd server 
